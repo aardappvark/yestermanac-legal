@@ -1,0 +1,232 @@
+/* DRAFT for lawyer review. Not in force.
+   Yestermanac legal site: the only stylesheet. Mobile first, system fonts only (no web fonts),
+   light and dark, left-to-right and right-to-left (logical properties throughout). */
+
+:root {
+  --paper: #f4eddc;
+  --card: #fbf6ea;
+  --ink: #231c15;
+  --ink-soft: #4a3f33;
+  --muted: #6e6253;
+  --accent: #8b2e1f;
+  --rule: #d9ccb0;
+  --draft-bg: #8b2e1f;
+  --draft-ink: #fff8ee;
+  --tbc-bg: #ffe08a;
+  --tbc-ink: #3a2a00;
+  --serif: Georgia, "Noto Serif", "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16130f;
+    --card: #221d17;
+    --ink: #ede4d3;
+    --ink-soft: #d4c8b4;
+    --muted: #a99c87;
+    --accent: #e08a6b;
+    --rule: #3b332a;
+    --draft-bg: #5e1f14;
+    --draft-ink: #ffeadf;
+    --tbc-bg: #6b5410;
+    --tbc-ink: #fff3c4;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+a { color: var(--accent); text-underline-offset: 0.15em; }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.skip {
+  position: absolute;
+  inset-inline-start: -9999px;
+  top: 0;
+}
+.skip:focus {
+  inset-inline-start: 0.5rem;
+  z-index: 10;
+  background: var(--card);
+  padding: 0.5rem 0.75rem;
+}
+
+.draft {
+  background: var(--draft-bg);
+  color: var(--draft-ink);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+.draft mark.tbc { background: transparent; color: inherit; outline: 1px dashed currentColor; }
+
+mark.tbc {
+  background: var(--tbc-bg);
+  color: var(--tbc-ink);
+  padding: 0 0.2em;
+  border-radius: 3px;
+  font-size: 0.92em;
+}
+
+header.site, main, footer.site {
+  max-width: 46rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+header.site { padding-block: 0.75rem 0; border-block-end: 1px solid var(--rule); }
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+/* Language switcher: a native <details>, no script needed. */
+details.lang { position: relative; }
+details.lang summary {
+  cursor: pointer;
+  list-style: none;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.9rem;
+  background: var(--card);
+}
+details.lang summary::-webkit-details-marker { display: none; }
+details.lang summary::after { content: " ▾"; }
+details.lang[open] summary::after { content: " ▴"; }
+details.lang ul {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.15rem 0.75rem;
+  position: absolute;
+  inset-inline-end: 0;
+  z-index: 5;
+  width: min(22rem, calc(100vw - 2rem));
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.18);
+}
+details.lang li a {
+  display: block;
+  padding: 0.35rem 0.4rem;
+  text-decoration: none;
+  border-radius: 0.3rem;
+}
+details.lang li a[aria-current] { background: var(--paper); font-weight: 700; color: var(--ink); }
+
+nav ul {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.25rem;
+}
+nav a {
+  display: block;
+  white-space: nowrap;
+  padding: 0.5rem 0.7rem;
+  text-decoration: none;
+  font-size: 0.92rem;
+  border-block-end: 3px solid transparent;
+}
+nav a[aria-current="page"] { color: var(--ink); font-weight: 700; border-block-end-color: var(--accent); }
+
+main { padding-block: 1.25rem 2rem; }
+
+h1, h2, h3 { font-family: var(--serif); color: var(--accent); line-height: 1.25; }
+h1 { font-size: 1.7rem; margin: 0.25rem 0 0.25rem; }
+h2 { font-size: 1.25rem; margin: 2rem 0 0.5rem; padding-block-start: 0.75rem; border-block-start: 1px solid var(--rule); }
+h3 { font-size: 1.05rem; margin: 1.25rem 0 0.4rem; color: var(--ink); }
+
+p, li, dd { color: var(--ink); }
+ul { padding-inline-start: 1.25rem; }
+li { margin-block: 0.35rem; }
+
+.meta { color: var(--muted); font-size: 0.9rem; margin-block-start: 0; }
+
+.translation {
+  background: var(--card);
+  border-inline-start: 3px solid var(--accent);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+/* Definition rows: stacked on phones, two columns on wider screens. No tables, so no sideways scrolling. */
+dl.rows { margin: 0.5rem 0 0; }
+dl.rows .row {
+  padding: 0.75rem 0;
+  border-block-end: 1px solid var(--rule);
+}
+dl.rows dt { font-weight: 700; color: var(--ink); }
+dl.rows dd { margin: 0.25rem 0 0; color: var(--ink-soft); }
+
+details.licence {
+  margin: 0.75rem 0;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.85rem;
+}
+details.licence summary { cursor: pointer; font-weight: 700; }
+details.licence .note { color: var(--muted); font-style: italic; }
+
+footer.site {
+  border-block-start: 1px solid var(--rule);
+  padding-block: 1rem 2rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Right-to-left scripts read better a little larger. */
+:lang(ar), :lang(ur) { font-size: 1.05em; }
+:lang(ur) { line-height: 1.9; }
+
+@media (min-width: 40rem) {
+  header.site, main, footer.site { padding-inline: 1.5rem; }
+  h1 { font-size: 2rem; }
+  dl.rows .row { display: grid; grid-template-columns: 12rem 1fr; gap: 1rem; }
+  dl.rows dd { margin: 0; }
+}
+
+@media print {
+  :root { --paper: #fff; --card: #fff; --ink: #000; --ink-soft: #000; --accent: #000; }
+  .skip, details.lang, nav { display: none; }
+  details.licence { display: block; }
+  a { color: inherit; }
+}
